@@ -1,8 +1,8 @@
 #Requires AutoHotkey v2.0
 
-#Include g:\AHK\gitee_ahk2\common\Extend.ahk
-#Include g:\AHK\gitee_ahk2\common\Theme.ahk
-#Include g:\AHK\gitee_ahk2\common\util\Animation.ahk
+#Include g:\AHK\git-ahk-lib\Extend.ahk
+#Include g:\AHK\git-ahk-lib\Theme.ahk
+#Include g:\AHK\git-ahk-lib\util\Animation.ahk
 
 #Include ../core/handleMgr.ahk
 #Include ../core/historyMgr.ahk

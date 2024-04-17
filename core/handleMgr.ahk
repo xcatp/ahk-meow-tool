@@ -1,7 +1,5 @@
-#Requires AutoHotkey v2.0
-
-#Include parse.ahk
 #Include ../handle/baseHandle.ahk
+#Include parse.ahk
 
 class Mgr {
   static h := Map()
@@ -10,7 +8,7 @@ class Mgr {
     if not handler() is baseHandle
       throw TypeError('无效的处理器:' Type(handler()))
     if Mgr.h.Has(which)
-      throw Error('duplicate key:' which)
+      throw Error('重复的命令:' which)
     Mgr.h.Set(which, handler)
     return this
   }

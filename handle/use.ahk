@@ -1,6 +1,6 @@
-#Include G:\AHK\gitee_ahk2\common\Path.ahk
-#Include G:\AHK\gitee_ahk2\common\util\config\CustomFS.ahk
-#Include G:\AHK\gitee_ahk2\common\util\ExecAhk2Script.ahk
+#Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
+#Include g:\AHK\git-ahk-lib\util\ExecAhk2Script.ahk
+#Include g:\AHK\git-ahk-lib\Path.ahk
 
 #Include baseHandle.ahk
 
@@ -16,7 +16,7 @@ class Use extends baseHandle {
         return this.Fail(JoinStr(, '[Error]', t, ' not found'))
       Run(cfs.Get(t))
     }
-    return this.Succ('ok')
+    return this.Succ('ok', 'x')
   }
 
 }

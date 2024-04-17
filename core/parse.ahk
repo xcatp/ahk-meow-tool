@@ -1,6 +1,4 @@
-#Requires AutoHotkey v2.0
-
-#Include G:\AHK\gitee_ahk2\common\Extend.ahk
+#Include g:\AHK\git-ahk-lib\Extend.ahk
 
 #Include keywords.ahk
 

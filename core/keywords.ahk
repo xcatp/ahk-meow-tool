@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-#Include g:\AHK\gitee_ahk2\common\Extend.ahk
+#Include g:\AHK\git-ahk-lib\Extend.ahk
 
 alias := Map(
   'start', A_Startup,

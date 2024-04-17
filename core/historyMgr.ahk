@@ -1,5 +1,3 @@
-#Requires AutoHotkey v2.0
-
 class History {
 
   static hist := [], cur := -1, histFilePath := './cfg/history.txt'

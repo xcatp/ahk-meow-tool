@@ -1,7 +1,4 @@
-#Requires AutoHotkey v2.0
-
-#Include G:\AHK\gitee_ahk2\common\util\config\CustomFS.ahk
-
+#Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
 #Include baseHandle.ahk
 
 class Open extends baseHandle {
