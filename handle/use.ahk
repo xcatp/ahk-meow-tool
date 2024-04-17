@@ -11,7 +11,7 @@ class Use extends baseHandle {
     if Path.IsAbsolute(t) {
       ExecScript(t, parsed.params.Join(A_Space), parsed.Extra)
     } else {
-      cfs := CustomFs.Of('G:\AHK\gitee_ahk2\_self\_game\index.txt')
+      cfs := CustomFs.Of('.\cfg\useFile.txt')
       if !r := cfs.Get(t)
         return this.Fail(JoinStr(, '[Error]', t, ' not found'))
       Run(cfs.Get(t))

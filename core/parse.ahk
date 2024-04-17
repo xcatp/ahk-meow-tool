@@ -5,6 +5,9 @@
 #Include keywords.ahk
 
 Parse(cmd) {
+  try ReplaceAlias(&cmd)
+  catch as e
+    return _fail(e.Message)
   parts := cmd.split(A_Space).filter(v => v)
   w := parts.shift(), p := [], kp := {}, idx := 0
   while ++idx <= parts.Length and (v := parts[idx])[1] = '-' {

@@ -2,9 +2,7 @@
 
 class History {
 
-  static hist := [], cur := -1, histFilePath := './core/history.txt'
-
-  static Reset() => History.cur := -1
+  static hist := [], cur := -1, histFilePath := './cfg/history.txt'
 
   static Get(last := true, reset?) {
     if !(l := History.hist.Length)
@@ -37,6 +35,7 @@ class History {
     f.Close()
   }
 
+  static Reset() => History.cur := -1
   static OpenFile() => Run(History.histFilePath)
   static Clear() => (f := FileOpen(History.histFilePath, 'w', 'utf-8'), f.Close())
 

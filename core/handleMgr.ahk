@@ -1,12 +1,18 @@
 #Requires AutoHotkey v2.0
 
 #Include parse.ahk
+#Include ../handle/baseHandle.ahk
 
 class Mgr {
-
   static h := Map()
 
-  static Register(which, handler) => Mgr.h.Has(which) ? MsgBox('duplicate key:' which) : Mgr.h.Set(which, handler)
+  static Register(which, handler) {
+    if not handler() is baseHandle
+      throw TypeError('无效的处理器:' Type(handler()))
+    if Mgr.h.Has(which)
+      throw Error('duplicate key:' which)
+    Mgr.h.Set(which, handler)
+  }
 
   static Check(cmd) {
     if !(o := Parse(cmd)).valid

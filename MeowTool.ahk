@@ -9,10 +9,12 @@ Esc:: ExitApp
 #Include handle\open.ahk
 #Include handle\run.ahk
 #Include handle\use.ahk
+#Include handle\code.ahk
 #Include ui\main.ahk
 
 History.Init()
 Mgr.Register('open', Open)
+Mgr.Register('code', Code)
 Mgr.Register('run', Run_)
 Mgr.Register('use', Use)
 
