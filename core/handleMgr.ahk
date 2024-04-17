@@ -12,6 +12,7 @@ class Mgr {
     if Mgr.h.Has(which)
       throw Error('duplicate key:' which)
     Mgr.h.Set(which, handler)
+    return this
   }
 
   static Check(cmd) {
