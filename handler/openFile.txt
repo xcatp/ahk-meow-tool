@@ -1,6 +1,0 @@
-doc:g:\_github\ahk_doc\docs\index.htm
-code:g:\
-memo:g:\_MEMO
-start:$A_Startup$
-lc:'F:\Typore\Typora\Typora.exe "G:\_Memo\Algorithm"'
-vlc:G:\AHK\gitee_ahk2\scripts\wallpaper.ahk

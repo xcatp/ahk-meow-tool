@@ -1,7 +1,9 @@
+#Requires AutoHotkey v2.0
+
 #Include g:\AHK\gitee_ahk2\common\Extend.ahk
 
-globalPrefix := '$'
-escapeChar := '\'
+; BUGS HERE
+globalPrefix := '$', escapeChar := '\'
 
 aliasMap := Map(
   'ahkRemote', 'G:\AHK\gitee_ahk2',
@@ -10,14 +12,12 @@ aliasMap := Map(
 )
 
 ReplaceAlias(&source) {
-  list := []
-  startPos := 1
+  list := [], startPos := 1
 
   while (pos := InStr(source, globalPrefix, , startPos)) && source[pos - 1] != escapeChar {
     for k, v in aliasMap {
       if SubStr(source, pos + 1).beginWith(k) {
-        list.Push(k)
-        startPos := pos + k.Length
+        list.Push(k), startPos := pos + k.Length
         break
       }
     }

@@ -1,1 +1,3 @@
-fs/history.txt
+.vscode
+core/history.txt
+handle/openFile.txt
