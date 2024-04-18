@@ -17,6 +17,8 @@
 │      parse.ahk       解析命令
 │
 ├─handle               处理器
+│  │  baseHandle.ahk
+│  └─buildIn           内置处理器
 └─ui                   图形界面
       main.ahk
 ```
@@ -30,18 +32,18 @@
 - 回显结果
 
 # 接受输入
-ui/main.ahk显示一个输入框，用于接受输入。
+`ui/main.ahk`显示一个输入框，用于接受输入。
 
 它是唯一的ui界面。
 
 # 关键字替换 
-core/keywords.ahk用于替换关键字。 
+`core/keywords.ahk`用于替换关键字。 
 
 对于`$$`内的字符串会被当作别名（用于缩短命令长度），可以使用转义符转移`$`，可以添加自定义别名。  
 一个示例如：```code $desktop$/a`$.ahk```，它将`desktop`替换为桌面路径，并将`$`符转义。
 
 # 命令规范
-core/parse.ahk用于解析输入的命令。
+`core/parse.ahk`用于解析输入的命令。
 
 它接受以下形式的命令：
 ```
@@ -52,10 +54,11 @@ core/parse.ahk用于解析输入的命令。
 
 
 # 处理器
-handle下脚本包含所有处理器。
+`handle`目录下包含所有处理器。
 
 ## baseHandle.ahk
-它是所有处理器的父类，包含`Handle`和两个返回值方法`Fail,Succ`。
+它是所有处理器的父类，包含`Handle`和两个返回值方法`Fail,Succ`，以及`Echo`用于提供帮助文档，静态变量`nullable`指定是否
+接受空执行目标（默认为`false`）。
 
 ## 自定义处理器  
 所有的处理器都需要继承自baseHandle，它帮助在注册时检查是否为合法的处理器；  
