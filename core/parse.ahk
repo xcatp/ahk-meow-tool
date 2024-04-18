@@ -16,7 +16,7 @@ Parse(cmd) {
     else p.Push(v.substring(2))
   }
   if idx > parts.Length
-    return _fail('缺少执行目标')
+    return _succ(w, { which: w, params: p, kvparams: kp, target: '', extra: '' })
   t := parts[idx++], ep := ''
   loop parts.Length - idx + 1
     ep .= parts[idx++] A_Space

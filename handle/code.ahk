@@ -18,4 +18,11 @@ class Code extends baseHandle {
     }
     return this.Fail('无效的执行目标')
   }
+
+  static Echo() => '
+  (
+    code
+    code [-r|-n] target
+    使用vscode打开指定目标。
+  )'
 }

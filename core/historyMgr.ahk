@@ -1,3 +1,5 @@
+#Include g:\AHK\git-ahk-lib\Path.ahk
+
 class History {
 
   static hist := [], cur := -1, histFilePath := './cfg/history.txt'
@@ -34,7 +36,7 @@ class History {
   }
 
   static Reset() => History.cur := -1
-  static OpenFile() => Run(History.histFilePath)
+  static OpenFile() => Run(Path.Join(A_ScriptDir, History.histFilePath))
   static Clear() => (f := FileOpen(History.histFilePath, 'w', 'utf-8'), f.Close())
 
 }

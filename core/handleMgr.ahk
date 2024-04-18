@@ -24,6 +24,6 @@ class Mgr {
     _fail(msg) => { valid: false, msg: msg }
   }
 
-  static Call(handler, parsed) => handler.handle(parsed)
+  static Call(handler, parsed) => handler.nullable ? handler.Handle(parsed) : handler.Fail('目标不可为空')
 
 }

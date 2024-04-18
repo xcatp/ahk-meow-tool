@@ -37,7 +37,7 @@ class MeowTool extends Gui {
   _Clear() => this.edit.Text := ''
 
   Handle() {
-    cmd := this.edit.Text
+    cmd := Trim(this.edit.Text)
     if !cmd
       return this.AddHistory(false, '')
     if cmd.beginWith(';')
@@ -45,7 +45,7 @@ class MeowTool extends Gui {
     this.AddHistory(true, _truncatedString(cmd, 30))
     if (r := Mgr.Check(cmd)).valid {
       echo := Mgr.Call(r.handler, r.parsed)
-      this.AddHistory(false, echo.r)
+      this.AddHistory(false, echo.r, echo.flag)
       if !IsSet(doHist) and echo.flag
         History.Add(cmd)
       switch echo.extra {
@@ -61,8 +61,8 @@ class MeowTool extends Gui {
 
   }
 
-  AddHistory(isInput, text) {
-    this['His'].Value .= (isInput ? '<< ' : '>> ') text '`n'
+  AddHistory(isInput, text, succ := true) {
+    this['His'].Value .= (isInput ? '<< ' : succ ? '>> ' : '>| ') text '`n'
     _fit(this.fontPixel), _autoClearHistory()
 
     _autoClearHistory() {

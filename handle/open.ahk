@@ -9,7 +9,15 @@ class Open extends baseHandle {
       Run res
       return this.Succ('ok', 'x')
     }
-    return this.Fail(JoinStr(, '[Error]', t, ' not found'))
+    return this.Fail(t ' not found')
   }
+
+  static Echo() => '
+  (
+    open
+    open target
+    打开配置文件中配置的文件或目录；
+    如果是命令行也可以运行。
+  )'
 
 }
