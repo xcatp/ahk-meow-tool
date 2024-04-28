@@ -7,8 +7,8 @@ class Exit_ extends baseHandle {
 
   static Echo() => '
   (
-    exit
-    exit
+    exit 内置命令。
+    exit []
     退出脚本。
   )'
 }

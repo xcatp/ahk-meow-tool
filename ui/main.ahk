@@ -12,14 +12,14 @@ down:: MeowTool.SetContent(History.Get(false))
 
 class MeowTool extends Gui {
 
-  static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r'
+  static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', maxMsg := 30, maxLen := 30
 
   __New() {
     super.__New('+AlwaysOnTop +ToolWindow -Caption +Border')
     this.SetFont('s16', 'Consolas')
     this.AddButton('w0 h0 xs Default').OnEvent('click', (*) => this.Handle())
     this.edit := this.AddEdit('ym w300 h30 -Multi')
-    this.fontPixel := 21, this.maxMsg := 30, this.SetFont('s12'), Theme.Light(this)
+    this.fontPixel := 21, this.SetFont('s12'), this.fc := Theme.Light(this).default_Fc
   }
 
   static SetContent(content) => content && MeowTool.ins.edit.Text := content
@@ -28,8 +28,18 @@ class MeowTool extends Gui {
 
   static Show() {
     Animation.RollDown(MeowTool.ins, Noop, (*) => MeowTool.ins.Move(, A_ScreenHeight / 4))
-    static _ := MeowTool.ins.AddText('xm+5 h800 w400 vHis c811a1a')
-    ControlFocus MeowTool.ins.edit.Hwnd, "A"
+    static _ := MeowTool.ins.AddText('xm h800 w300 vHis c' MeowTool.ins.fc)
+    ControlFocus(MeowTool.ins.edit.Hwnd, "A"), FrameShadow(MeowTool.ins.Hwnd)
+
+    FrameShadow(hwnd) {
+      DllCall("dwmapi\DwmIsCompositionEnabled", "int*", &enabled := 0)
+      if !enabled
+        DllCall("SetClassLong", "uint", hwnd, "int", -26, "int", 0x20000)
+      else {
+        DllCall("dwmapi\DwmExtendFrameIntoClientArea", "ptr", hwnd, "ptr", Buffer(16, 0))
+        DllCall("dwmapi\DwmSetWindowAttribute", "ptr", hwnd, "uint", 2, "int*", 2, "uint", 4)
+      }
+    }
   }
 
   _Exit() => (Sleep(1000), Animation.RollUp(MeowTool.ins), ExitApp())
@@ -42,7 +52,7 @@ class MeowTool extends Gui {
       return this.AddHistory(false, '')
     if cmd.beginWith(';')
       doHist := false, cmd := cmd.substring(2)
-    this.AddHistory(true, _truncatedString(cmd, 30))
+    this.AddHistory(true, _truncatedString(cmd, 27))
     if (r := Mgr.Check(cmd)).valid {
       echo := Mgr.Call(r.handler, r.parsed)
       this.AddHistory(false, echo.r, echo.flag)
@@ -52,30 +62,33 @@ class MeowTool extends Gui {
         case MeowTool.reoladFlag: return this._Reolad()
         case MeowTool.exitFlag: return this._Exit()
       }
-    } else {
-      this.AddHistory(false, r.msg '---' _truncatedString(cmd, 10))
-    }
+    } else this.AddHistory(false, r.msg '---' _truncatedString(cmd, 10))
     this._Clear()
 
     _truncatedString(text, maxLen) => text.Length > maxLen ? (text.substring(1, maxLen) '...') : text
-
   }
 
   AddHistory(isInput, text, succ := true) {
-    this['His'].Value .= (isInput ? '<< ' : succ ? '>> ' : '>| ') text '`n'
-    _fit(this.fontPixel), _autoClearHistory()
+    this['His'].Value .= (isInput ? '<< ' : succ ? '>> ' : '>| ') _slice(text, (ml := MeowTool.maxLen) - 1) '`n'
+    _fit(this.fontPixel * _cacl(text)), _autoClearHistory()
+
+    _slice(t, l) { ; 不适用于汉字
+      return StrSplit(t, '`n').reduce((acc, cur) => acc . _c(cur, 1), '').RTrim('`n').replace('`n', '`n---')
+      _c(v, i) => v.Length - i <= l ? SubStr(v, i) '`n' : SubStr(v, i, l) '`n' _c(v, i + l)
+    } 
+    _cacl(t) => StrSplit(t, '`n').reduce((acc, cur) => ((cur.Length + ml - 1) // ml + acc), 0)
 
     _autoClearHistory() {
       static cnt := 0
-      if ++cnt >= this.maxMsg
+      if ++cnt >= MeowTool.maxMsg
         this['His'].Text := '', Sleep(300), _fit(this.fontPixel * cnt, false), cnt := 0
     }
 
     _fit(pixel, inc := true) {
       this.GetClientPos(, , , &ch)
       if !inc {
-        if ch - pixel <= 50
-          pixel := ch - 55
+        if ch - pixel <= 54
+          pixel := ch - 54
         loop pixel
           this.Move(, , , ch - A_Index)
       } else loop pixel

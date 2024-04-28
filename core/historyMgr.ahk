@@ -8,8 +8,10 @@ class History {
     if !(l := History.hist.Length)
       return
     cur := History.cur
-    if cur = 0 && !last
+    if cur <= 0 && !last {
+      History.cur := -1
       return ';'
+    }
     cur += last ? 1 : -1
     cur := cur >= l ? l - 1 : cur, cur := cur <= 0 ? 0 : cur
     History.cur := cur

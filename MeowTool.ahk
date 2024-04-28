@@ -9,6 +9,7 @@ Esc:: ExitApp
 #Include handle\buildin\hist.ahk
 #Include handle\buildin\meow.ahk
 #Include handle\buildin\exit.ahk
+#Include handle\buildin\echo.ahk
 #Include handle\open.ahk
 #Include handle\run.ahk
 #Include handle\use.ahk
@@ -17,6 +18,7 @@ Esc:: ExitApp
 
 Mgr
   .Register('exit', Exit_)
+  .Register('echo', Echo)
   .Register('hist', Hist)
   .Register('meow', Meow)
   .Register('open', Open)
@@ -24,8 +26,7 @@ Mgr
   .Register('run', Run_)
   .Register('use', Use)
 
-History.Init()
-MeowTool.Show()
+History.Init(), MeowTool.Show()
 OnMessage(0x0201, (*) => PostMessage(0xA1, 2))
 
 !Space:: {

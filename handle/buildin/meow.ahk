@@ -6,15 +6,12 @@ class Meow extends baseHandle {
   static nullable := true
 
   static Handle(parsed) {
-    if Mgr.h.Has(parsed.target) {
-      MsgBox(Mgr.h.Get(parsed.target).Echo())
-      return this.Succ('ok')
-    }
+    if Mgr.h.Has(parsed.target)
+      return this.Succ(Mgr.h.Get(parsed.target).Echo())
     switch parsed.target {
-      case '': MsgBox(Mgr.h.Keys.Join(' '))
+      case '': return this.Succ(Mgr.h.Keys.Join(','))
       default: return this.Fail('不支持的操作')
     }
-    return this.Succ('ok')
   }
 
   static Echo() => '

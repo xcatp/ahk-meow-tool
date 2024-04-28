@@ -16,12 +16,11 @@ Parse(cmd) {
     else p.Push(v.substring(2))
   }
   if idx > parts.Length
-    return _succ(w, { which: w, params: p, kvparams: kp, target: '', extra: '' })
+    return _succ(w, { which: w, params: p, kvparams: kp, target: '', extra: '', raw: cmd })
   t := parts[idx++], ep := ''
   loop parts.Length - idx + 1
     ep .= parts[idx++] A_Space
-  parsed := { which: w, params: p, kvparams: kp, target: t, extra: RTrim(ep) }
-  return _succ(w, parsed)
+  return _succ(w, { which: w, params: p, kvparams: kp, target: t, extra: RTrim(ep), raw: cmd })
 
   _succ(w, o) => { valid: true, which: w, parsed: o }
   _fail(msg) => { valid: false, msg: msg }

@@ -5,6 +5,7 @@
 alias := Map(
   'start', A_Startup,
   'desktop', A_Desktop,
+  '_', A_UserName
 )
 
 ReplaceAlias(&source) {

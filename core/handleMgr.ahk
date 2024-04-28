@@ -6,9 +6,9 @@ class Mgr {
 
   static Register(which, handler) {
     if not handler() is baseHandle
-      throw TypeError('无效的处理器:' Type(handler()))
+      throw TypeError('无效的处理器:' handler.Prototype.__Class)
     if Mgr.h.Has(which)
-      throw Error('重复的命令:' which)
+      throw Error('注册重复的命令:' which)
     Mgr.h.Set(which, handler)
     return this
   }
@@ -24,6 +24,6 @@ class Mgr {
     _fail(msg) => { valid: false, msg: msg }
   }
 
-  static Call(handler, parsed) => handler.nullable ? handler.Handle(parsed) : handler.Fail('目标不可为空')
+  static Call(handler, parsed) => (!handler.nullable && !parsed.target) ? handler.Fail('目标不可为空') : handler.Handle(parsed)
 
 }
