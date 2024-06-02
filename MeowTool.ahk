@@ -14,6 +14,7 @@ Esc:: ExitApp
 #Include handle\run.ahk
 #Include handle\use.ahk
 #Include handle\code.ahk
+#Include handle\wt.ahk
 #Include ui\main.ahk
 
 Mgr
@@ -25,6 +26,7 @@ Mgr
   .Register('code', Code)
   .Register('run', Run_)
   .Register('use', Use)
+  .Register('wt', Wt)
 
 History.Init(), MeowTool.Show()
 OnMessage(0x0201, (*) => PostMessage(0xA1, 2))

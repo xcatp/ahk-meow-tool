@@ -14,7 +14,7 @@ class Use extends baseHandle {
       cfs := CustomFs.Of('.\cfg\useFile.txt')
       if !r := cfs.Get(t)
         return this.Fail(t ' not found')
-      Run(cfs.Get(t))
+      Run(r)
     }
     return this.Succ('ok', 'x')
   }
