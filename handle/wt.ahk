@@ -9,13 +9,13 @@ class Wt extends baseHandle {
   static Handle(parsed) {
     ts := parsed.raw.substring(parsed.which.length + 1)
     cfs := CustomFS.Of('./cfg/wtFile.txt')
-    i := WtRunner.Builder().Window(-1)
+    i := WtRunner.Builder()
 
     StrSplit(ts, A_Space).filter(v => v).forEach(v => _process(v))
     _process(t) {
       if not r := cfs.Get(t)
         throw Error('无效的执行目标:' t)
-      i.NewTab(r.tabName, , r.tabColor, r.execPath, r.command)
+      i.NewTab(r.tabName, , r.tabColor, r.execPath, r.command).Window(r.window)
     }
     i.Build().RunCmd()
     return this.Succ('ok', 'x')
