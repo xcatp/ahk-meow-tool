@@ -1,0 +1,9 @@
+#Include buildin\hist.ahk
+#Include buildin\meow.ahk
+#Include buildin\exit.ahk
+#Include buildin\echo.ahk
+#Include open.ahk
+#Include run.ahk
+#Include use.ahk
+#Include code.ahk
+#Include wt.ahk

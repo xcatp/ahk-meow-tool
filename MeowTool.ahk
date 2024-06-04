@@ -6,15 +6,7 @@ Esc:: ExitApp
 
 #Include core\handleMgr.ahk
 #Include core\historyMgr.ahk
-#Include handle\buildin\hist.ahk
-#Include handle\buildin\meow.ahk
-#Include handle\buildin\exit.ahk
-#Include handle\buildin\echo.ahk
-#Include handle\open.ahk
-#Include handle\run.ahk
-#Include handle\use.ahk
-#Include handle\code.ahk
-#Include handle\wt.ahk
+#Include handle\index.ahk
 #Include ui\main.ahk
 
 Mgr
