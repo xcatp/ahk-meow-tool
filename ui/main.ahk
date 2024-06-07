@@ -80,9 +80,11 @@ class MeowTool extends Gui {
     this['His'].Value .= (isInput ? '<< ' : succ ? '>> ' : '>| ') _slice(text, (ml := MeowTool.maxLen) - 1) '`n'
     _fit(this.fontPixel * _cacl(text)), _autoClearHistory()
 
-    _slice(t, l) { ; 不适用于汉字
+    _slice(t, l) {
       return StrSplit(t, '`n').reduce((acc, cur) => acc . _c(cur, 1), '').RTrim('`n').replace('`n', '`n---')
-      _c(v, i) => v.Length - i <= l ? SubStr(v, i) '`n' : SubStr(v, i, l) '`n' _c(v, i + l)
+      _c(v, i) => _t(v) - i <= l ? SubStr(v, i) '`n' : SubStr(v, i, _l := _s(v, i)) '`n' _c(v, i + _l)
+      _t(str) => str.toCharArray().reduce((acc, cur) => acc += IsHan(cur) ? 2 : 1, 0)
+      _s(v, i) => _t(a := SubStr(v, i, l)) <= l ? l : (j := 0, Array.from(a).findIndex(c => (j += IsHan(c) ? 2 : 1) >= l))
     }
     _cacl(t) => StrSplit(t, '`n').reduce((acc, cur) => ((cur.Length + ml - 1) // ml + acc), 0)
 
