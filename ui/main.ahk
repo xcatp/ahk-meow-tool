@@ -14,12 +14,20 @@ class MeowTool extends Gui {
 
   static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', maxMsg := 30, maxLen := 30
 
+  class Green extends Theme.Themes {
+    __New() {
+      super.__New()
+      this.window_Bgc := '#eff6da', this.default_Fc := '#426800'
+      this.edit_Fc := '#264b0c', this.edit_Bgc := '#fafff4'
+    }
+  }
+
   __New() {
     super.__New('+AlwaysOnTop +ToolWindow -Caption +Border')
     this.SetFont('s16', 'Consolas')
     this.AddButton('w0 h0 xs Default').OnEvent('click', (*) => this.Handle())
     this.edit := this.AddEdit('ym w300 h30 -Multi')
-    this.fontPixel := 21, this.SetFont('s12'), this.fc := Theme.Light(this).default_Fc
+    this.fontPixel := 21, this.SetFont('s12'), this.fc := Theme.Custom(this, MeowTool.Green()).default_Fc
   }
 
   static SetContent(content) => content && MeowTool.ins.edit.Text := content
@@ -75,7 +83,7 @@ class MeowTool extends Gui {
     _slice(t, l) { ; 不适用于汉字
       return StrSplit(t, '`n').reduce((acc, cur) => acc . _c(cur, 1), '').RTrim('`n').replace('`n', '`n---')
       _c(v, i) => v.Length - i <= l ? SubStr(v, i) '`n' : SubStr(v, i, l) '`n' _c(v, i + l)
-    } 
+    }
     _cacl(t) => StrSplit(t, '`n').reduce((acc, cur) => ((cur.Length + ml - 1) // ml + acc), 0)
 
     _autoClearHistory() {
