@@ -77,8 +77,8 @@ class MeowTool extends Gui {
   }
 
   AddHistory(isInput, text, succ := true) {
-    this['His'].Value .= (isInput ? '<< ' : succ ? '>> ' : '>| ') _slice(text, (ml := MeowTool.maxLen) - 1) '`n'
-    _fit(this.fontPixel * _cacl(text)), _autoClearHistory()
+    this['His'].Value .= text := ((isInput ? '<< ' : succ ? '>> ' : '>| ') _slice(text, (ml := MeowTool.maxLen) - 1)) '`n'
+    _fit(this.fontPixel * (StrSplit(text, '`n').Length - 1)), _autoClearHistory()
 
     _slice(t, l) {
       return StrSplit(t, '`n').reduce((acc, cur) => acc . _c(cur, 1), '').RTrim('`n').replace('`n', '`n---')
@@ -86,7 +86,6 @@ class MeowTool extends Gui {
       _t(str) => str.toCharArray().reduce((acc, cur) => acc += IsHan(cur) ? 2 : 1, 0)
       _s(v, i) => _t(a := SubStr(v, i, l)) <= l ? l : (j := 0, Array.from(a).findIndex(c => (j += IsHan(c) ? 2 : 1) >= l))
     }
-    _cacl(t) => StrSplit(t, '`n').reduce((acc, cur) => ((cur.Length + ml - 1) // ml + acc), 0)
 
     _autoClearHistory() {
       static cnt := 0
@@ -97,8 +96,8 @@ class MeowTool extends Gui {
     _fit(pixel, inc := true) {
       this.GetClientPos(, , , &ch)
       if !inc {
-        if ch - pixel <= 54
-          pixel := ch - 54
+        if ch - pixel <= 56
+          pixel := ch - 56
         loop pixel
           this.Move(, , , ch - A_Index)
       } else loop pixel
