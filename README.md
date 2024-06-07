@@ -1,10 +1,10 @@
 # 介绍
-`MeowTool.ahk`是用于快速执行一系列命令的工具。
+`MeowTool.ahk`是一个简洁小巧的、用于快速执行一系列命令的工具。
 通过输入自定义命令，传递给自定义处理器来执行一些繁琐的事情。
 
 ---
 包结构：
-```
+```text
 │  .gitignore
 │  MeowTool.ahk        启动脚本
 │  README.md
@@ -52,7 +52,6 @@
 
 > 注意：脚本只负责解析，将解析结果传给处理器，具体命令如何处理由处理器决定。
 
-
 # 处理器
 `handle`目录下包含所有处理器。
 
@@ -77,8 +76,7 @@ main : $remote$scripts\main.ahk
 test : $remote$_DEV\Test\_.ahk
 ```
 
-调用命令：`code this`
-最终使用vscode打开此工具目录。
+调用命令：`code this`，使用vscode打开此工具目录。
 
 具体的使用规则，看CustomFs.ahk的描述（另一个仓库）。
 
@@ -95,4 +93,7 @@ test : $remote$_DEV\Test\_.ahk
   + 根据自己定义的规则返回`this.Succ()`或`this.Fail()`
 
 - 注册命令
-  + 在MeowTool.ahk启动脚本中写入：`Mgr.register('code', Code)`
+  + 在`handle\index.ahk`中导入脚本，并写入：`Mgr.register('code', Code)`
+
+# 结语
+现在，启动`MeowTool.ahk`，键入`echo hello $_$!`吧~
