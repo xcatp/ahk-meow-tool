@@ -78,18 +78,18 @@ class MeowTool extends Gui {
 
   AddHistory(isInput, text, succ := true) {
     this['His'].Value .= text := ((isInput ? '<< ' : succ ? '>> ' : '>| ') _slice(text, (ml := MeowTool.maxLen) - 1)) '`n'
-    _fit(this.fontPixel * (StrSplit(text, '`n').Length - 1)), _autoClearHistory()
+    _fit(this.fontPixel * (n := StrSplit(text, '`n').Length - 1)), _autoClearHistory(n)
 
     _slice(t, l) {
       return StrSplit(t, '`n').reduce((acc, cur) => acc . _c(cur, 1), '').RTrim('`n').replace('`n', '`n---')
       _c(v, i) => _t(v) - i <= l ? SubStr(v, i) '`n' : SubStr(v, i, _l := _s(v, i)) '`n' _c(v, i + _l)
-      _t(str) => str.toCharArray().reduce((acc, cur) => acc += IsHan(cur) ? 2 : 1, 0)
-      _s(v, i) => _t(a := SubStr(v, i, l)) <= l ? l : (j := 0, Array.from(a).findIndex(c => (j += IsHan(c) ? 2 : 1) >= l))
+      _t(str) => str.toCharArray().reduce((acc, cur) => acc += IsHan(cur) ? 2.2 : 1, 0)
+      _s(v, i) => _t(a := SubStr(v, i, l)) <= l ? l : (j := 0, Array.from(a).findIndex(c => (j += IsHan(c) ? 2.2 : 1) >= l))
     }
 
-    _autoClearHistory() {
+    _autoClearHistory(n := 1) {
       static cnt := 0
-      if ++cnt >= MeowTool.maxMsg
+      if (cnt += n) >= MeowTool.maxMsg
         this['His'].Text := '', Sleep(300), _fit(this.fontPixel * cnt, false), cnt := 0
     }
 

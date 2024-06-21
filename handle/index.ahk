@@ -10,6 +10,7 @@
 #Include code.ahk
 #Include wt.ahk
 #Include translate.ahk
+#Include random.ahk
 
 Mgr
   .Register('exit', Exit_)
@@ -22,3 +23,4 @@ Mgr
   .Register('use', Use)
   .Register('wt', Wt)
   .Register('t', Trans)
+  .Register('r', RandomGen)
