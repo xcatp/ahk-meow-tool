@@ -1,15 +1,18 @@
 #Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
+#Include g:\AHK\git-ahk-lib\util\Fs.ahk
 #Include baseHandle.ahk
 
 class Code extends baseHandle {
 
   static Handle(parsed) {
-    t := parsed.target, p := parsed.params.Length ? '-' parsed.params[1] : '-r'
+
+    t := parsed.target, p := parsed.params.Length ? '-' parsed.params[1] : ''
     if p and (p != '-r' and p != '-n')
       return this.Fail('无效的参数：' p)
     cfs := CustomFS.Of('./cfg/codeFile.txt')
     if r := cfs.Get(parsed.target) {
-      Run(A_ComSpec ' /c code ' JoinStr(A_Space, p, r, ' && exit'), , 'min')
+      p := p || (Fs.IsDir(r) ? '-n' : '-r')  ; 如果没有指定，则根据是否为文件夹设置
+      Run(A_ComSpec ' /c code ' JoinStr(A_Space,'"' p, r, '" && exit'), , 'hide')
       return this.Succ('ok, open custom file', 'x')
     }
     if FileExist(t) {
