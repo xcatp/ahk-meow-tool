@@ -11,6 +11,8 @@
 #Include wt.ahk
 #Include translate.ahk
 #Include random.ahk
+#Include cacl.ahk
+#Include oqm.ahk
 
 Mgr
   .Register('exit', Exit_)
@@ -24,3 +26,5 @@ Mgr
   .Register('wt', Wt)
   .Register('t', Trans)
   .Register('r', RandomGen)
+  .Register('cacl', Cacl)
+  .Register('oqm', Oqm)
