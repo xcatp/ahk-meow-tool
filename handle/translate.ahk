@@ -2,6 +2,7 @@
 
 #Include g:\AHK\git-ahk-lib\util\Unicodes.ahk
 #Include g:\AHK\git-ahk-lib\util\JSON.ahk
+#Include g:\AHK\git-ahk-lib\Path.ahk
 #Include g:\AHK\git-ahk-lib\RunCMD.ahk
 
 class Trans extends baseHandle {
@@ -11,8 +12,9 @@ class Trans extends baseHandle {
       return this.Fail('failure on' data)
     return this.Succ(!o.Get('data').Length ? 'no result' : ToString(o.Get('data')[1]['v']))
     DoRequest(body) {
+      _p := Path.join(A_ScriptDir, '/cfg/translate/_.py')
       loop 5 {
-        if JSON.Parse(StrReplace(res := RunCMD('py G:\AHK\_SELF\translate\_.py ' body), "'", '"'), true).Get('errno') = 0
+        if JSON.Parse(StrReplace(res := RunCMD(Format('py {} {}', _p, body)), "'", '"'), true).Get('errno') = 0
           break
         Sleep 300
       }
