@@ -1,2 +1,4 @@
 .vscode
-cfg
+cfg/*
+!/cfg/oqm
+!/cfg/translate
