@@ -13,6 +13,7 @@
 #Include random.ahk
 #Include cacl.ahk
 #Include oqm.ahk
+#Include todo.ahk
 
 Mgr
   .Register('exit', Exit_)
@@ -28,3 +29,4 @@ Mgr
   .Register('r', RandomGen)
   .Register('cacl', Cacl)
   .Register('oqm', Oqm)
+  .Register('todo', Todo)
