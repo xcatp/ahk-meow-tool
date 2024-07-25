@@ -12,7 +12,7 @@ class Code extends baseHandle {
     cfs := CustomFS.Of('./cfg/codeFile.txt')
     if r := cfs.Get(parsed.target) {
       p := p || (Fs.IsDir(r) ? '-n' : '-r')  ; 如果没有指定，则根据是否为文件夹设置
-      Run(A_ComSpec ' /c code ' JoinStr(A_Space,'"' p, r, '" && exit'), , 'hide')
+      Run(A_ComSpec ' /c code ' JoinStr(A_Space, p, '"' r '"',' && exit'), , 'hide')
       return this.Succ('ok, open custom file', 'x')
     }
     if FileExist(t) {
