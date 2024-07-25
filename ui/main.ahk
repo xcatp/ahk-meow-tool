@@ -7,8 +7,8 @@
 #Include ../core/handleMgr.ahk
 #Include ../core/historyMgr.ahk
 
-up:: MeowTool.SetContent(History.Get())
-down:: MeowTool.SetContent(History.Get(false))
+~up:: MeowTool.SetContent(History.Get())
+~down:: MeowTool.SetContent(History.Get(false))
 
 class MeowTool extends Gui {
 
