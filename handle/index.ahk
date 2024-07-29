@@ -4,6 +4,7 @@
 #Include buildin\meow.ahk
 #Include buildin\exit.ahk
 #Include buildin\echo.ahk
+#Include buildin\exec.ahk
 #Include open.ahk
 #Include run.ahk
 #Include use.ahk
@@ -14,12 +15,14 @@
 #Include cacl.ahk
 #Include oqm.ahk
 #Include todo.ahk
+#Include sequence.ahk
 
 Mgr
   .Register('exit', Exit_)
   .Register('echo', Echo)
   .Register('hist', Hist)
   .Register('meow', Meow)
+  .Register('exec', Exec)
   .Register('open', Open)
   .Register('code', Code)
   .Register('run', Run_)
@@ -30,3 +33,4 @@ Mgr
   .Register('cacl', Cacl)
   .Register('oqm', Oqm)
   .Register('todo', Todo)
+  .Register('seq', Sequence)
