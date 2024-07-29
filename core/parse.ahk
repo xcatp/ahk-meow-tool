@@ -2,27 +2,43 @@
 
 #Include keywords.ahk
 
+; MToString Parse("echo -'x p' -b='he lo' 'a \'d' b 'e f' ef")
+
 Parse(cmd) {
   try ReplaceAlias(&cmd)
   catch as e
     return _fail(e.Message)
-  parts := cmd.split(A_Space).filter(v => v)
-  w := parts.shift(), p := [], kp := {}, idx := 0
-  while ++idx <= parts.Length and (v := parts[idx])[1] = '-' {
-    if v.Length = 1
-      return _fail('无效的空参')
-    if i := InStr(v, '=')
-      kp[v.substring(2, i)] := v.substring(i + 1)
-    else p.Push(v.substring(2))
+  _esc := '\', _qc := "'"
+  args := [], switchs := [], p := [], kp := {}, _s := '', i := 1, _q := false
+  while i <= cmd.Length {
+    if (_c := cmd.charAt(i)) = _esc && i < cmd.length && cmd.charAt(i + 1) = _qc {
+      _s .= _qc, i++
+    } else if _c = _qc {
+      if _q
+        _push(_s), _s := ''
+      _q := !_q
+    } else if _c = A_Space && !_q {
+      if _s.length > 0
+        _push(_s)
+      _s := ''
+    } else _s .= _c
+    i++
   }
-  if idx > parts.Length
-    return _succ(w, { which: w, params: p, kvparams: kp, target: '', extra: '', raw: cmd })
-  t := parts[idx++], ep := ''
-  loop parts.Length - idx + 1
-    ep .= parts[idx++] A_Space
-  return _succ(w, { which: w, params: p, kvparams: kp, target: t, extra: RTrim(ep), raw: cmd })
+  if _s.length > 0
+    args.push(_s)
+  if args.Length < 2
+    return _fail('target missing')
+  return _succ(args.shift(), { params: p, kvparams: kp, target: args.shift(), extra: args, raw: cmd })
 
+  _push(s) {
+    if s[1] != '-'
+      args.push(s)
+    if s.Length = 1
+      return
+    if _ := InStr(s, '=')
+      kp[s.substring(2, _)] := s.substring(_ + 1)
+    else p.Push(_s.substring(2))
+  }
   _succ(w, o) => { valid: true, which: w, parsed: o }
   _fail(msg) => { valid: false, msg: msg }
-
 }
