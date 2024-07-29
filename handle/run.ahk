@@ -4,7 +4,7 @@
 class Run_ extends baseHandle {
 
   static Handle(parsed) {
-    try Run(parsed.target)
+    try Run(Format('{}', parsed.target))
     catch
       return this.Fail('failure to run')
     return this.Succ('ok', 'x')
