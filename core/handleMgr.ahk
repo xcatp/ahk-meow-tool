@@ -29,8 +29,7 @@ class Mgr {
       return handler.Fail('目标不可为空')
     try r := handler.Handle(parsed)
     catch as e {
-      
-      return handler.Fail('ERROR:' e.Message)
+      return handler.Fail('ERROR:' handler.Prototype.__Class ':' e.Message)
     }
     return r
   }
