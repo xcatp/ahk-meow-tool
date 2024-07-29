@@ -12,15 +12,15 @@ class Todo extends baseHandle {
       return this.Succ('ok', 'x')
     }
     if cfs.Has(_t) {
-      if !parsed.extra
+      if !parsed.extra.Length
         return this.Succ(cfs.Get(_t).join('`n'))
-      return cfs.Append(_t, parsed.extra)
-        ? (cfs.Sync(), this.Succ('appended!'))
-        : this.Fail('key does not exsit')
+      for k, in parsed.extra
+        cfs.Append(_t, k)
+      return (cfs.Sync(), this.Succ('appended!'))
     } else {
-      if !parsed.extra
+      if !parsed.extra.Length
         return this.Fail('val can not be null')
-      cfs.Add(_t, StrSplit(parsed.extra, ','))
+      cfs.Add(_t, parsed.extra.Join(','))
       cfs.Sync()
       return this.Succ('created!')
     }
@@ -32,6 +32,9 @@ class Todo extends baseHandle {
     todo
     todo [target]
     添加或显示todos
+    todo : 打开 todo 文件
+    todo key :查看 key 内容
+    todo key val : 向 key 添加 vals
   )'
 
 }
