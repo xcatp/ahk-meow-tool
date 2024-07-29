@@ -1,7 +1,10 @@
 import execjs
+import io
 import sys
 from requests import post
  
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='gb18030')  #改变标准输出的默认编码
+
 with open('./_.js', 'r', encoding='utf-8') as f:
     jstext = f.read()
     
