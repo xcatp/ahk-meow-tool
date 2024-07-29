@@ -1,12 +1,16 @@
 #Requires AutoHotkey v2.0
 
 #Include g:\AHK\git-ahk-lib\Extend.ahk
+#Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
 
 alias := Map(
   'start', A_Startup,
   'desktop', A_Desktop,
   '_', A_UserName
 )
+for k, v in CustomFS.Of('./cfg/keywords.txt').data {
+  alias.Set(k, v)
+}
 
 ReplaceAlias(&source) {
   global alias
