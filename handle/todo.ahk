@@ -14,13 +14,13 @@ class Todo extends baseHandle {
     if cfs.Has(_t) {
       if !parsed.extra.Length
         return this.Succ(cfs.Get(_t).join('`n'))
-      for k, in parsed.extra
+      for k in parsed.extra
         cfs.Append(_t, k)
       return (cfs.Sync(), this.Succ('appended!'))
     } else {
       if !parsed.extra.Length
         return this.Fail('val can not be null')
-      cfs.Add(_t, parsed.extra.Join(','))
+      cfs.Add(_t, parsed.extra)
       cfs.Sync()
       return this.Succ('created!')
     }

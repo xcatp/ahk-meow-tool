@@ -26,13 +26,19 @@ Parse(cmd) {
   }
   if _s.length > 0
     args.push(_s)
-  if args.Length < 2
-    return _fail('target missing')
-  return _succ(args.shift(), { params: p, kvparams: kp, target: args.shift(), extra: args, raw: cmd })
+  return _succ(args.shift(), {
+    params: p,
+    kvparams: kp,
+    target: args.Length ? args.shift() : '',
+    extra: args,
+    raw: cmd
+  })
 
   _push(s) {
-    if s[1] != '-'
+    if s[1] != '-' {
       args.push(s)
+      return
+    }
     if s.Length = 1
       return
     if _ := InStr(s, '=')
