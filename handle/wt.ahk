@@ -7,7 +7,7 @@
 class Wt extends baseHandle {
 
   static Handle(parsed) {
-    ts := parsed.raw.substring(parsed.which.length + 1)
+    ts := parsed.raw.substring(3)
     cfs := CustomFS.Of('./cfg/wtFile.txt')
     i := WtRunner.Builder()
 
