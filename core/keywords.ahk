@@ -3,17 +3,17 @@
 #Include g:\AHK\git-ahk-lib\Extend.ahk
 #Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
 
-alias := Map(
+keywords := Map(
   'start', A_Startup,
   'desktop', A_Desktop,
   '_', A_UserName
 )
 for k, v in CustomFS.Of('./cfg/keywords.txt').data {
-  alias.Set(k, v)
+  keywords.Set(k, v)
 }
 
 ReplaceAlias(&source) {
-  global alias
+  global keywords
   static rc := '$', ec := '``'
   cs := source.toCharArray(), i := 1, r := ''
   while i <= cs.Length {
@@ -22,7 +22,7 @@ ReplaceAlias(&source) {
       esc := true, i++
     else if !esc and cs[i] = rc {
       _i := ++i, _jumpToChar(cs, rc, &i), _k := source.substring(_i, i)
-      try _v := alias.Get(_k)
+      try _v := keywords.Get(_k)
       catch
         throw Error('引用不存在的键')
       r .= _v

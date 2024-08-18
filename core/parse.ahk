@@ -1,10 +1,12 @@
 #Include g:\AHK\git-ahk-lib\Extend.ahk
 
 #Include keywords.ahk
+#Include alias.ahk
 
 ; MToString Parse("echo -'x p' -b='he lo' 'a \'d' b 'e f' ef")
 
 Parse(cmd) {
+  cmd := GetAlias(cmd) || cmd
   try ReplaceAlias(&cmd)
   catch as e
     return _fail(e.Message)
