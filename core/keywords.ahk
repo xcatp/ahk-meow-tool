@@ -26,8 +26,8 @@ ReplaceAlias(&source) {
       catch
         throw Error('引用不存在的键')
       r .= _v
-    } else r .= cs[i]
-    i++
+    }
+    r .= cs[i], i++
   }
   source := r
 

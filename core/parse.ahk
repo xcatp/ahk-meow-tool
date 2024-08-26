@@ -20,9 +20,7 @@ Parse(cmd) {
         _push(_s), _s := ''
       _q := !_q
     } else if _c = A_Space && !_q {
-      if _s.length > 0
-        _push(_s)
-      _s := ''
+      _push(_s), _s := ''
     } else _s .= _c
     i++
   }
@@ -37,6 +35,8 @@ Parse(cmd) {
   })
 
   _push(s) {
+    if !s
+      return
     if s[1] != '-' {
       args.push(s)
       return
