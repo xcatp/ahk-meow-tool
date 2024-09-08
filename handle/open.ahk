@@ -1,11 +1,10 @@
-#Include g:\AHK\git-ahk-lib\util\config\CustomFSEx.ahk
 #Include baseHandle.ahk
 
 class Open extends baseHandle {
 
   static Handle(parsed) {
-    cfs := CustomFSEx.Of('./cfg/openFile.txt')
-    if parsed.params.findIndex(_ => _ = 'a') != -1 {
+    cfs := MeowConfEx.Of('./cfg/openFile.txt')
+    if parsed.params.findIndex(_ => _ = 'a') {
      if cfs.Add(parsed.target, parsed.extra, parsed.kvparams.c, , false) {
        cfs.Sync()
        return this.Succ('ok', 'x')

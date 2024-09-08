@@ -1,4 +1,3 @@
-#Include g:\AHK\git-ahk-lib\util\config\CustomFSEx.ahk
 #Include baseHandle.ahk
 
 class Todo extends baseHandle {
@@ -6,7 +5,7 @@ class Todo extends baseHandle {
 
   static Handle(parsed) {
     _p := '.\cfg\todoFile.txt'
-    cfs := CustomFSEx.Of(_p)
+    cfs := MeowConfEx.Of(_p)
     if !(_t := parsed.target) {
       Run _p
       return this.Succ('ok', 'x')

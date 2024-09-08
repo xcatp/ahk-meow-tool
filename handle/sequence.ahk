@@ -1,12 +1,10 @@
 #Include baseHandle.ahk
 #Include buildin/exec.ahk
 
-#Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
-
 class Sequence extends baseHandle {
 
   static Handle(parsed) {
-    cfs := CustomFS.Of('./cfg/seqFile.txt')
+    cfs := MeowConf.Of('./cfg/seqFile.txt')
     if !r := cfs.Get(parsed.target)
       return this.Fail(parsed.target ' not found')
     total := r.Length, successed := 0

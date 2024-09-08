@@ -1,14 +1,11 @@
 #Requires AutoHotkey v2.0
 
-#Include g:\AHK\git-ahk-lib\Extend.ahk
-#Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
-
 keywords := Map(
   'start', A_Startup,
   'desktop', A_Desktop,
   '_', A_UserName
 )
-for k, v in CustomFS.Of('./cfg/keywords.txt').data {
+for k, v in MeowConf.Of('./cfg/keywords.txt').data {
   keywords.Set(k, v)
 }
 

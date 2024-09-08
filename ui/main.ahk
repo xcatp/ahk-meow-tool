@@ -3,6 +3,8 @@
 #Include g:\AHK\git-ahk-lib\Extend.ahk
 #Include g:\AHK\git-ahk-lib\Theme.ahk
 #Include g:\AHK\git-ahk-lib\util\Animation.ahk
+#Include g:\AHK\git-ahk-lib\util\config\MeowConf.ahk
+#Include g:\AHK\git-ahk-lib\util\config\MeowConfEx.ahk
 
 #Include ../core/handleMgr.ahk
 #Include ../core/historyMgr.ahk

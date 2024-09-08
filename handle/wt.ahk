@@ -1,4 +1,3 @@
-#Include g:\AHK\git-ahk-lib\util\config\CustomFS.ahk
 #Include g:\AHK\git-ahk-lib\util\WtRunner.ahk
 #Include g:\AHK\git-ahk-lib\Path.ahk
 
@@ -8,7 +7,7 @@ class Wt extends baseHandle {
 
   static Handle(parsed) {
     ts := parsed.raw.substring(3)
-    cfs := CustomFS.Of('./cfg/wtFile.txt')
+    cfs := MeowConf.Of('./cfg/wtFile.txt')
     i := WtRunner.Builder()
 
     StrSplit(ts, A_Space).filter(v => v).forEach(v => _process(v))

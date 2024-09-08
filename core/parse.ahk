@@ -1,5 +1,3 @@
-#Include g:\AHK\git-ahk-lib\Extend.ahk
-
 #Include keywords.ahk
 #Include alias.ahk
 
