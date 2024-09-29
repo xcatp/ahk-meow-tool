@@ -11,6 +11,7 @@
 #Include code.ahk
 #Include wt.ahk
 #Include translate.ahk
+#Include translate2.ahk
 #Include random.ahk
 #Include cacl.ahk
 #Include oqm.ahk
@@ -34,3 +35,4 @@ Mgr
   .Register('oqm', Oqm)
   .Register('todo', Todo)
   .Register('seq', Sequence)
+  .Register('tt', Trans2)
