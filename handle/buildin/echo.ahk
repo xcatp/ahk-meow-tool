@@ -6,7 +6,14 @@ class Echo extends baseHandle {
   static nullable := true
 
   static Handle(parsed) {
-    return this.Succ(LTrim(parsed.raw.substring(5)))
+
+    for v in parsed.params
+      t .= '-' v ' '
+    for k, v in parsed.kvparams.OwnProps()
+      t .= Format('-{}={} ', k, v)
+    t .= parsed.target ' ' parsed.extra.join(A_Space)
+
+    return this.Succ('>' t '<')
   }
 
   static Echo() => '
