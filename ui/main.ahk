@@ -40,7 +40,7 @@ class MeowTool extends Gui {
   static Resume() => MeowTool.ins.Show()
 
   static Show() {
-    Animation.RollDown(MeowTool.ins, Noop, (*) => MeowTool.ins.Move(, A_ScreenHeight / 4, 340, 55))
+    Animation.RollDown(MeowTool.ins, Noop, (*) => MeowTool.ins.Move(, A_ScreenHeight / 4, 342, 55))
     ControlFocus(MeowTool.ins.edit.Hwnd, "A"), FrameShadow(MeowTool.ins.Hwnd)
 
     FrameShadow(hwnd) {
@@ -55,10 +55,10 @@ class MeowTool extends Gui {
 
   Handle() {
     cmd := Trim(this.edit.Text)
-    if !cmd
-      return this.AddHistory(false, '')
     if cmd.beginWith(';')
       doHist := false, cmd := cmd.substring(2)
+    if !cmd
+      return this.AddHistory(false, '')
     this.AddHistory(true, _truncatedString(cmd, 27))
     if (r := Mgr.Check(cmd)).valid {
       echo := Mgr.Call(r.handler, r.parsed)
