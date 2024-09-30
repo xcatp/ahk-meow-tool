@@ -19,13 +19,13 @@ class History {
   }
 
   static Add(content) {
-    l := History.hist.Length
+    l := History.hist.Length, History.Reset()
     if l && History.cur >= 0 && History.hist[l - History.cur] = content
       return
     if l && History.hist[l] = content
       return
     FileAppend(content '`r`n', History.histFilePath, 'utf-8')
-    History.hist.Push(content), History.Reset()
+    History.hist.Push(content)
   }
 
   static Init() {
