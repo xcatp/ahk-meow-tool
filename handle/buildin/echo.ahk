@@ -6,12 +6,13 @@ class Echo extends baseHandle {
   static nullable := true
 
   static Handle(parsed) {
-
     for v in parsed.params
       t .= '-' v ' '
     for k, v in parsed.kvparams.OwnProps()
-      t .= Format('-{}={} ', k, v)
-    t .= parsed.target ' ' parsed.extra.join(A_Space)
+      IsArray(v) ? t .= Format('-{}=[{}]', k, v.Join()) : t .= Format('-{}={} ', k, v)
+    t .= parsed.target
+    if parsed.extra.Length
+      t .= ' ' parsed.extra.join(A_Space)
 
     return this.Succ('>' t '<')
   }
