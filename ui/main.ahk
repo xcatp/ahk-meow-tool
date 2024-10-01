@@ -76,7 +76,7 @@ class MeowTool extends Gui {
   }
 
   OnCopy(g, *) {
-    A_Clipboard := StrReplace(g.Text, '`n', '')
+    A_Clipboard := g.raw
     Tip.ShowTip('copied!', Cursor.x + 10, Cursor.y + 10, 2000)
   }
 
@@ -88,7 +88,7 @@ class MeowTool extends Gui {
 
     ta := this.AddText('Backgroundcfe6bc w271 x+2 ', t)
     ta.OnEvent('ContextMenu', (v, *) => this.OnCopy(v)), ta.GetPos(, &y, , &h)
-    this.hh += (h + 2), this.l.push(ta, tb)
+    this.hh += (h + 2), this.l.push(ta, tb), ta.raw := text
 
     _autoClearHistory(h, n + 1)
 
