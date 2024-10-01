@@ -16,12 +16,12 @@
 
 class MeowTool extends Gui {
 
-  static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', maxMsg := 20, maxLen := 30
+  static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', maxMsg := 20, maxLen := 30, maxH := 900
 
   class Green extends Theme.Themes {
     __New() {
       super.__New()
-      this.window_Bgc := '#eff6da', this.default_Fc := '#426800'
+      this.window_Bgc := '#eff6da', this.default_Fc := '#003711'
       this.edit_Fc := '#264b0c', this.edit_Bgc := '#fafff4'
     }
   }
@@ -84,13 +84,13 @@ class MeowTool extends Gui {
     t := _slice(text, (ml := MeowTool.maxLen) - 1)
 
     tb := this.AddText('h20 xs y' this.hh + 2 ' Background' (isInput ? 'b6e8b6' : succ ? 'b4d4e1' : 'e8bfbf')
-      , (isInput ? '<< ' : succ ? '>> ' : '>| ') . '`n---'.repeat(n := t.count('`n')))
+      , (isInput ? '<< ' : succ ? '>> ' : '>| ') . '`n---'.repeat(t.count('`n')))
 
-    ta := this.AddText('Backgroundcfe6bc w271 x+2 ', t)
+    ta := this.AddText('Backgroundcfe6bc w271 x+2 c' this.fc, t)
     ta.OnEvent('ContextMenu', (v, *) => this.OnCopy(v)), ta.GetPos(, &y, , &h)
     this.hh += (h + 2), this.l.push(ta, tb), ta.raw := text
 
-    _autoClearHistory(h, n + 1)
+    _autoClearHistory(h)
 
     _slice(t, l) {
       return StrSplit(t, '`n').reduce((acc, cur) => acc . _c(cur, 1), '').RTrim('`n')
@@ -99,10 +99,14 @@ class MeowTool extends Gui {
       _s(v, i) => _t(a := SubStr(v, i, l)) <= l ? l : (j := 0, Array.from(a).findIndex(c => (j += IsHan(c) ? 2.2 : 1) >= l))
     }
 
-    _autoClearHistory(_h, n := 1) {
+    _autoClearHistory(_h) {
       if this.l.Length > MeowTool.maxMsg * 2
         _doDelete()
       else _doFit(_h)
+
+      _h := 0
+      while this.h > MeowTool.maxH && this.l.Length > 2
+        _doDelete()
 
       _doFit(_h, incr := true) {
         ch := this.h
