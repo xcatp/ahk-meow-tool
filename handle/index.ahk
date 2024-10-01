@@ -17,6 +17,8 @@
 #Include oqm.ahk
 #Include todo.ahk
 #Include sequence.ahk
+#Include http.ahk
+#Include twice\index.ahk
 
 Mgr
   .Register('exit', Exit_)
@@ -36,3 +38,4 @@ Mgr
   .Register('todo', Todo)
   .Register('seq', Sequence)
   .Register('tt', Trans2)
+  .Register('http', Http)
