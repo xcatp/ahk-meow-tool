@@ -6,11 +6,11 @@ class Exec extends baseHandle {
   static Handle(parsed) {
     if (r := Mgr.Check(parsed.target)).valid {
       if r.handler.Prototype.__Class = 'Exec'
-        return this.Fail('Recursive calls')
+        return this.Fail('Recursive calls(exec)')
       echo := Mgr.Call(r.handler, r.parsed)
-      return this.Succ('done : ' echo.r)
-    } else return this.Fail('Invalid target')
-    return this.Succ('ok')
+      return this.Succ(echo.r)
+    }
+    return this.Fail('Invalid target(exec)')
   }
 
   static Echo() => '
