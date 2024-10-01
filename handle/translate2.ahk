@@ -1,5 +1,6 @@
 ; 需要使用 aly 的机器翻译服务
 #Include baseHandle.ahk
+#Include buildin/exec.ahk
 
 #Include g:\AHK\git-ahk-lib\util\Unicodes.ahk
 #Include g:\AHK\git-ahk-lib\util\JSON.ahk
@@ -10,7 +11,7 @@ class Trans2 extends baseHandle {
 
   static Handle(parsed) {
 
-    source_text := parsed.target (parsed.extra ? ' ' parsed.extra.join(A_Space) : '')
+    source_text := parsed.target (parsed.extra.Length ? ' ' parsed.extra.join(A_Space) : '')
     guess := IsZH(source_text) ; 也可以购买语种识别服务
     source_lang := parsed.kvparams['sl'] || (guess ? 'zh' : 'en')
     target_lang := parsed.kvparams['tl'] || (guess ? 'en' : 'zh')
@@ -21,7 +22,10 @@ class Trans2 extends baseHandle {
     if (o := DoRequest()).Get('Code') != 200
       return this.Fail('failure on' source_text '`ncuz:' o.Get('Message'))
 
-    return this.Succ(o.Get('Data').Get('Translated'))
+    echo := Exec.Handle({ target: 't ' source_text })
+
+    Record(source_text, r := o.Get('Data').Get('Translated'))
+    return this.Succ(r '`n|`n' echo.r)
 
     DoRequest() {
       _p := Path.join(A_ScriptDir, '/cfg/translate/aly.py')
@@ -32,6 +36,7 @@ class Trans2 extends baseHandle {
     }
 
     IsZH(str) => !str.toCharArray().every(v => !IsHan(v))
+    Record(k, v) => FileAppend('`n' k ' : ' v, './cfg/dict.txt', 'utf-8')
   }
 
   static Echo() => '
