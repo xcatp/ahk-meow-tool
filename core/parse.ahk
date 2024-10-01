@@ -22,8 +22,9 @@ Parse(cmd) {
     } else _s .= _c
     i++
   }
+
   if _s.length > 0
-    args.push(_s)
+    _push(_s)
   return _succ(args.shift(), {
     params: p,
     kvparams: kp,
@@ -41,9 +42,11 @@ Parse(cmd) {
     }
     if s.Length = 1
       return
-    if _ := InStr(s, '=')
-      kp[s.substring(2, _)] := s.substring(_ + 1)
-    else p.Push(_s.substring(2))
+    if _ := InStr(s, '=') {
+      if kp[k := s.substring(2, _)] { ; 重复键时转化为数组
+        kp[k] := Array(kp[k], s.substring(_ + 1))
+      } else kp[k] := s.substring(_ + 1)
+    } else p.Push(_s.substring(2))
   }
   _succ(w, o) => { valid: true, which: w, parsed: o }
   _fail(msg) => { valid: false, msg: msg }
