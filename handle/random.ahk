@@ -13,8 +13,7 @@ class RandomGen extends baseHandle {
     prefix := parsed.kvparams.HasProp('p') ? parsed.kvparams.p : ''
     loop parsed.target - (prefix ? prefix.Length : 0)
       s .= charset[Random(1, charset.Length)]
-    A_Clipboard := s := (prefix s)
-    return this.Succ(s, 'x')
+    return this.Succ(prefix s)
   }
 
   static Echo() => '
