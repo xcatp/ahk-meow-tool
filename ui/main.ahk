@@ -16,7 +16,8 @@
 
 class MeowTool extends Gui {
 
-  static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', maxMsg := 20, maxLen := 30, maxH := 900
+  static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', extraFlag := 'e'
+    , maxMsg := 20, maxLen := 30, maxH := 900
 
   class Green extends Theme.Themes {
     __New() {
@@ -31,6 +32,9 @@ class MeowTool extends Gui {
     this.SetFont('s16', 'Consolas')
     this.AddButton('w0 h0 xs Default').OnEvent('click', (*) => this.Handle())
     this.edit := this.AddEdit('section xm ym w300 h30 -Multi')
+    this.sbtn := this.AddText('yp w25 ym+3 x+2', '·')
+    this.sbtn.OnEvent('doubleClick', (*) => this._ToggleExtraArea())
+    this.extra := this.AddEdit('w300 h30 yp-3 x+2 Multi'), this.extra.Visible := false
     this.h := 65, this.hh := 55, this.l := []
     this.SetFont('s12'), this.fc := Theme.Custom(this, MeowTool.Green()).default_Fc
   }
@@ -40,13 +44,25 @@ class MeowTool extends Gui {
   static Resume() => MeowTool.ins.Show()
 
   static Show() {
-    Animation.RollDown(MeowTool.ins, Noop, (*) => MeowTool.ins.Move(, A_ScreenHeight / 4, 342, 55))
+    Animation.RollDown(MeowTool.ins, Noop, (*) => MeowTool.ins.Move(A_ScreenWidth / 2 - 171, A_ScreenHeight / 4, 342, 55))
     ControlFocus(MeowTool.ins.edit.Hwnd, "A"), FrameShadow(MeowTool.ins.Hwnd)
 
     FrameShadow(hwnd) {
       DllCall("dwmapi\DwmExtendFrameIntoClientArea", "ptr", hwnd, "ptr", Buffer(16, 0))
       DllCall("dwmapi\DwmSetWindowAttribute", "ptr", hwnd, "uint", 2, "int*", 2, "uint", 4)
     }
+  }
+
+  _DisplayExtraArea() => (this._ChangeW(672), this.sbtn.Text := '<<', this.extra.Visible := true)
+  _HideExtraArea() => (this._ChangeW(342), this.sbtn.Text := '·', this.extra.Visible := false)
+  _SetExtraAreaContent(v) => this.extra.Value := v
+  _ToggleExtraArea() => this.extra.Visible ? this._HideExtraArea() : this._DisplayExtraArea()
+
+
+  _ChangeW(_w) {
+    this.GetPos(, , &w)
+    loop Abs(_w - w)
+      this.Move(, , w + A_Index * (_w > w ? 1 : -1))
   }
 
   _Exit() => (Sleep(1000), Animation.RollUp(MeowTool.ins), ExitApp())
@@ -57,17 +73,23 @@ class MeowTool extends Gui {
     cmd := Trim(this.edit.Text)
     if cmd.beginWith(';')
       doHist := false, cmd := cmd.substring(2)
-    if !cmd
-      return this.AddHistory(false, '')
+    if !cmd {
+      this.AddHistory(false, '')
+      return
+    }
+
     this.AddHistory(true, _truncatedString(cmd, 27))
     if (r := Mgr.Check(cmd)).valid {
       echo := Mgr.Call(r.handler, r.parsed)
-      this.AddHistory(false, echo.r, echo.flag)
       if !IsSet(doHist) and echo.flag
         History.Add(cmd)
       switch echo.extra {
         case MeowTool.reoladFlag: return this._Reolad()
         case MeowTool.exitFlag: return this._Exit()
+        case MeowTool.extraFlag:
+          this._DisplayExtraArea(echo.r)
+          this.AddHistory(false, 'see extra.', echo.flag)
+        default: this.AddHistory(false, echo.r, echo.flag)
       }
     } else this.AddHistory(false, r.msg '---' _truncatedString(cmd, 10))
     this._Clear()
@@ -119,6 +141,7 @@ class MeowTool extends Gui {
             this.Move(, , , ch - A_Index)
           this.h -= _h
         }
+        this.extra.Move(, , , this.h - 22)
       }
 
       _doDelete() {
