@@ -11,7 +11,7 @@ class Http extends baseHandle {
     for v in header
       _ := InStr(v, ':'), headers[Trim(v.substring(1, _))] := Trim(v.substring(_ + 1))
     res := WinHttpRequest().request(parsed.target, method, data?, headers)
-    return this.Succ(res)
+    return this.Succ(res, 'e')
   }
 
   static Echo() => '

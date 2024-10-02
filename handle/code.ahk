@@ -14,7 +14,7 @@ class Code extends baseHandle {
       return this.Succ('ok, open custom file', 'x')
     }
     if FileExist(t) {
-      Run(A_ComSpec ' /c code ' t ' && exit', , 'min')
+      Run(A_ComSpec ' /c code ' t ' && exit', , 'hide')
       return this.Succ('ok', 'x')
     }
     return this.Fail('无效的执行目标')

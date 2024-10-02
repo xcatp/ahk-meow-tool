@@ -13,11 +13,13 @@
 
 ~up:: MeowTool.SetContent(History.Get())
 ~down:: MeowTool.SetContent(History.Get(false))
+^Right:: MeowTool.ins._DisplayExtraArea()
+^Left::MeowTool.ins._HideExtraArea()
 
 class MeowTool extends Gui {
 
   static ins := MeowTool(), exitFlag := 'x', reoladFlag := 'r', extraFlag := 'e'
-    , maxMsg := 20, maxLen := 30, maxH := 900
+    , maxMsg := 20, maxLen := 30, maxH := 800
 
   class Green extends Theme.Themes {
     __New() {
@@ -33,9 +35,9 @@ class MeowTool extends Gui {
     this.AddButton('w0 h0 xs Default').OnEvent('click', (*) => this.Handle())
     this.edit := this.AddEdit('section xm ym w300 h30 -Multi')
     this.sbtn := this.AddText('yp w25 ym+3 x+2', '·')
-    this.sbtn.OnEvent('doubleClick', (*) => this._ToggleExtraArea())
+    this.sbtn.OnEvent('ContextMenu', (*) => this._ToggleExtraArea())
+    this.h := 65, this.hh := 55, this.l := [], this.SetFont('s13')
     this.extra := this.AddEdit('w300 h30 yp-3 x+2 Multi'), this.extra.Visible := false
-    this.h := 65, this.hh := 55, this.l := []
     this.SetFont('s12'), this.fc := Theme.Custom(this, MeowTool.Green()).default_Fc
   }
 
@@ -55,7 +57,7 @@ class MeowTool extends Gui {
 
   _DisplayExtraArea() => (this._ChangeW(672), this.sbtn.Text := '<<', this.extra.Visible := true)
   _HideExtraArea() => (this._ChangeW(342), this.sbtn.Text := '·', this.extra.Visible := false)
-  _SetExtraAreaContent(v) => this.extra.Value := v
+  _SetExtraAreaContent(v) => v && this.extra.Value := v
   _ToggleExtraArea() => this.extra.Visible ? this._HideExtraArea() : this._DisplayExtraArea()
 
 
@@ -87,7 +89,7 @@ class MeowTool extends Gui {
         case MeowTool.reoladFlag: return this._Reolad()
         case MeowTool.exitFlag: return this._Exit()
         case MeowTool.extraFlag:
-          this._DisplayExtraArea(echo.r)
+          this._DisplayExtraArea(), this._SetExtraAreaContent(echo.r)
           this.AddHistory(false, 'see extra.', echo.flag)
         default: this.AddHistory(false, echo.r, echo.flag)
       }
@@ -103,7 +105,7 @@ class MeowTool extends Gui {
   }
 
   AddHistory(isInput, text, succ := true) {
-    t := _slice(text, (ml := MeowTool.maxLen) - 1)
+    t := _slice(text, (ml := MeowTool.maxLen) - 1), this._SetExtraAreaContent(text)
 
     tb := this.AddText('h20 xs y' this.hh + 2 ' Background' (isInput ? 'b6e8b6' : succ ? 'b4d4e1' : 'e8bfbf')
       , (isInput ? '<< ' : succ ? '>> ' : '>| ') . '`n---'.repeat(t.count('`n')))
